@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TCGDexApp">
         <activity
-            android:name=".MainActivity"
+            android:name="com.ricardo.tcg_dex.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.TCGDexApp">
             <intent-filter>

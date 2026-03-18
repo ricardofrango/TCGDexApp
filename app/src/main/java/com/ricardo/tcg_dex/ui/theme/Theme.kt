@@ -1,4 +1,4 @@
-package com.ricardo.tcgdexapp.ui.theme
+package com.ricardo.tcg_dex.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

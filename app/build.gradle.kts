@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.ricardo.tcgdexapp"
+    namespace = "com.ricardo.tcg_dex"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
