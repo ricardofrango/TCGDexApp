@@ -1,10 +1,15 @@
 package com.ricardo.tcg_dex.networking.api
 
-import com.ricardo.tcg_dex.networking.model.ResponseCardBrief
+import com.ricardo.tcg_dex.networking.model.CardBriefDto
+import com.ricardo.tcg_dex.networking.model.CardDto
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 internal interface TCGDexAPI {
 
     @GET("v2/en/cards")
-    suspend fun getCards(): List<ResponseCardBrief>
+    suspend fun getCards(): List<CardBriefDto>
+
+    @GET("v2/en/cards/{id}")
+    suspend fun getCardById(@Path("id") id: String): CardDto
 }

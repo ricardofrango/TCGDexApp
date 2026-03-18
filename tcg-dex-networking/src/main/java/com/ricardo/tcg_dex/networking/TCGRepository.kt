@@ -24,4 +24,5 @@ class TCGRepository(baseURl: String) : ITCGRepository {
         .create(TCGDexAPI::class.java)
 
     override suspend fun getCards() = repository.getCards()
+    override suspend fun getCardById(id: String) = repository.getCardById(id)
 }
