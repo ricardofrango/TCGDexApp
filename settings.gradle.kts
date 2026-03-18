@@ -24,4 +24,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "TCGDexApp"
 include(":app")
- 
+include(":tcg-dex-networking")
