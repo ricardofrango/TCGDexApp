@@ -1,4 +1,4 @@
-package com.ricardo.tcg_dex
+package com.ricardo.tcg_dex.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,12 +11,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.ricardo.tcg_dex.networking.ITCGRepository
+import com.ricardo.tcg_dex.networking.TCGRepository
 import com.ricardo.tcg_dex.ui.theme.TCGDexAppTheme
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContent {
             TCGDexAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
