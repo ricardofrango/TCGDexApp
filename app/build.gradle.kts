@@ -23,6 +23,23 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    flavorDimensions += listOf("env")
+
+    productFlavors {
+        create("dev") {
+            dimension = "env"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+
+            buildConfigField("String", "BASE_URL", "\"https://api.tcgdex.net/\"")
+        }
+        create("prod") {
+            dimension = "env"
+
+            buildConfigField("String", "BASE_URL", "\"https://api.tcgdex.net/\"")
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -38,10 +55,12 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
 dependencies {
+    implementation(project(":tcg-dex-networking"))
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.androidx.core.ktx)
