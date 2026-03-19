@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -22,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -32,6 +34,7 @@ import androidx.navigation.compose.composable
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import com.ricardo.tcg_dex.R
 import com.ricardo.tcg_dex.presentation.TCGDexScreen
 import com.ricardo.tcg_dex.presentation.screen_cards_list.model.CardUiModel
 import com.ricardo.tcg_dex.ui.theme.TCGDexAppTheme
@@ -47,6 +50,7 @@ fun NavGraphBuilder.cardsListComposable(
 private fun CardsListScreen(modifier: Modifier = Modifier, navigate: (String) -> Unit) {
     val viewModel = hiltViewModel<CardsListViewModel>()
     val uiState by viewModel.uiState.collectAsState()
+    val query by viewModel.query.collectAsState()
 
     val onCardClicked: (CardUiModel) -> Unit = { card ->
         navigate(TCGDexScreen.CardDetail.route + "?id=${card.id}")
@@ -55,7 +59,9 @@ private fun CardsListScreen(modifier: Modifier = Modifier, navigate: (String) ->
     ShowCardsList(
         modifier = modifier.fillMaxSize(),
         uiState = uiState,
-        onCardClicked = onCardClicked
+        query = query,
+        onQueryChanged = viewModel::onQueryChanged,
+        onCardClicked = onCardClicked,
     )
 }
 
@@ -63,22 +69,35 @@ private fun CardsListScreen(modifier: Modifier = Modifier, navigate: (String) ->
 private fun ShowCardsList(
     modifier: Modifier = Modifier,
     uiState: CardsListUiState,
+    query: String,
+    onQueryChanged: (String) -> Unit,
     onCardClicked: (CardUiModel) -> Unit
 ) {
     Box(modifier = modifier) {
-        when (uiState) {
-            CardsListUiState.Loading ->
-                CardsListLoadingState(Modifier.fillMaxSize())
+        Column(modifier = Modifier.fillMaxSize()) {
+            OutlinedTextField(
+                modifier = Modifier
+                    .padding(horizontal = 8.dp)
+                    .padding(bottom = 16.dp)
+                    .fillMaxWidth(),
+                value = query,
+                onValueChange = onQueryChanged,
+                label = { Text(stringResource(R.string.pokemon_name_hint)) },
+            )
+            when (uiState) {
+                CardsListUiState.Loading ->
+                    CardsListLoadingState(Modifier.fillMaxSize())
 
-            is CardsListUiState.Idle ->
-                CardsListIdleState(
-                    modifier = Modifier.fillMaxSize(),
-                    cards = uiState.cards,
-                    onCardClicked = onCardClicked
-                )
+                is CardsListUiState.Idle ->
+                    CardsListIdleState(
+                        modifier = Modifier.fillMaxSize(),
+                        cards = uiState.cards,
+                        onCardClicked = onCardClicked
+                    )
 
-            CardsListUiState.Error ->
-                CardsListErrorState(Modifier.fillMaxSize())
+                CardsListUiState.Error ->
+                    CardsListErrorState(Modifier.fillMaxSize())
+            }
         }
     }
 }
@@ -92,7 +111,7 @@ private fun CardsListIdleState(
     Column(modifier) {
         Text(
             modifier = Modifier.padding(16.dp),
-            text = "Cards List",
+            text = stringResource(R.string.pokemon_list_title),
             style = MaterialTheme.typography.titleLarge
         )
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
@@ -123,7 +142,7 @@ private fun CardItem(
             AsyncImage(
                 modifier = Modifier
                     .padding(end = 8.dp)
-                    .size(49.dp,68.dp),
+                    .size(49.dp, 68.dp),
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(it)
                     .crossfade(true)
@@ -133,7 +152,7 @@ private fun CardItem(
         } ?: Spacer(
             modifier = Modifier
                 .padding(end = 8.dp)
-                .size(49.dp,68.dp)
+                .size(49.dp, 68.dp)
         )
         Text(
             modifier = Modifier
@@ -188,7 +207,9 @@ private fun CardsListScreenPreview(
     TCGDexAppTheme {
         ShowCardsList(
             uiState = uiState,
-            onCardClicked = {}
+            onCardClicked = {},
+            query = "",
+            onQueryChanged = {}
         )
     }
 }

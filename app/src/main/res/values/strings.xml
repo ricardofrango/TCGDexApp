@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TCGDexApp</string>
+    <string name="pokemon_name_hint">Pokemon name</string>
+    <string name="pokemon_list_title">Pokemon Cards List</string>
 </resources>

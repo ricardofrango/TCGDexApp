@@ -9,8 +9,8 @@ class GetCardsUseCase @Inject constructor(
     private val repository: ITCGRepository
 ) : IGetCardsUseCase {
 
-    override suspend fun invoke() = runCatching {
-        repository.getCards()
+    override suspend fun invoke(name: String?) = runCatching {
+        repository.getCards(name)
             .map {
                 Card(
                     id = it.id,
