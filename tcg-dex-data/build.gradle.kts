@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.ricardo.tcg_dex.networking"
+    namespace = "com.ricardo.tcg_dex.data"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -38,27 +38,18 @@ android {
     productFlavors {
         create("dev") {
             dimension = "env"
-            buildConfigField("String", "BASE_URL", "\"https://api.tcgdex.net/\"")
         }
         create("prod") {
             dimension = "env"
-
-            buildConfigField("String", "BASE_URL", "\"https://api.tcgdex.net/\"")
         }
-    }
-
-    buildFeatures {
-        buildConfig = true
     }
 }
 
 dependencies {
+    implementation(project(":tcg-dex-domain"))
+    implementation(project(":tcg-dex-networking"))
+
     // HILT
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-
-    // Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.retrofit.http.interceptor)
 }

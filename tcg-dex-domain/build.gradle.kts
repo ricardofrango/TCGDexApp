@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.ricardo.tcg_dex.networking"
+    namespace = "com.ricardo.tcg_dex.domain"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -28,27 +28,10 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    flavorDimensions += listOf("env")
-
-    productFlavors {
-        create("dev") {
-            dimension = "env"
-            buildConfigField("String", "BASE_URL", "\"https://api.tcgdex.net/\"")
-        }
-        create("prod") {
-            dimension = "env"
-
-            buildConfigField("String", "BASE_URL", "\"https://api.tcgdex.net/\"")
-        }
-    }
-
-    buildFeatures {
-        buildConfig = true
     }
 }
 
@@ -56,9 +39,4 @@ dependencies {
     // HILT
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-
-    // Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.retrofit.http.interceptor)
 }

@@ -25,3 +25,5 @@ dependencyResolutionManagement {
 rootProject.name = "TCGDexApp"
 include(":app")
 include(":tcg-dex-networking")
+include(":tcg-dex-domain")
+include(":tcg-dex-data")

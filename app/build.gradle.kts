@@ -30,13 +30,9 @@ android {
             dimension = "env"
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-
-            buildConfigField("String", "BASE_URL", "\"https://api.tcgdex.net/\"")
         }
         create("prod") {
             dimension = "env"
-
-            buildConfigField("String", "BASE_URL", "\"https://api.tcgdex.net/\"")
         }
     }
 
@@ -55,12 +51,12 @@ android {
     }
     buildFeatures {
         compose = true
-        buildConfig = true
     }
 }
 
 dependencies {
-    implementation(project(":tcg-dex-networking"))
+    implementation(project(":tcg-dex-domain"))
+    implementation(project(":tcg-dex-data"))
 
     //COIL
     implementation(libs.coil.compose)
@@ -72,8 +68,10 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
 
+    // AndroidX
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.compose.material3)
 
     //COMPOSE
     implementation(platform(libs.androidx.compose.bom))
@@ -83,12 +81,4 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.navigation.compose)
 
-    implementation(libs.androidx.compose.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    debugImplementation(libs.androidx.compose.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
 }
