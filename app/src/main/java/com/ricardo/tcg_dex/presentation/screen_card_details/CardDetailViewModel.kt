@@ -38,6 +38,8 @@ class CardDetailViewModel @Inject constructor(
                             id = it.id,
                             image = it.image,
                             name = it.name,
+                            description = it.description,
+                            rarity = it.rarity,
                         )
                     )
                 }

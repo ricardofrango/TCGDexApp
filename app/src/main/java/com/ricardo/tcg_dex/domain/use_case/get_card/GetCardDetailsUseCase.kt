@@ -14,6 +14,8 @@ class GetCardDetailsUseCase @Inject constructor(
             id = result.id,
             image = result.image,
             name = result.name,
+            rarity = result.rarity,
+            description = result.description,
         )
     }.onFailure { Result.failure<CardDetails>(it) }
 }

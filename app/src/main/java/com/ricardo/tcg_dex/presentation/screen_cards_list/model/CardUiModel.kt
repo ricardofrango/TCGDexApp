@@ -4,5 +4,8 @@ data class CardUiModel(
     val id: String,
     val localId: String,
     val name: String,
-    val image: String?
-)
+    private val image: String?
+) {
+    val imageUrl: String?
+        get() = "$image/low.webp".takeIf { image != null }
+}

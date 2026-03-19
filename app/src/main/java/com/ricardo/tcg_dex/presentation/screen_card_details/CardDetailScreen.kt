@@ -3,7 +3,9 @@ package com.ricardo.tcg_dex.presentation.screen_card_details
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
@@ -13,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -22,6 +25,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import com.ricardo.tcg_dex.presentation.TCGDexScreen
 import com.ricardo.tcg_dex.presentation.screen_card_details.model.CardDetailsUiModel
 import com.ricardo.tcg_dex.ui.theme.TCGDexAppTheme
@@ -77,8 +83,47 @@ fun CardDetailsIdleState(
     modifier: Modifier = Modifier,
     cardDetails: CardDetailsUiModel
 ) {
-    Column(modifier) {
-        Text(cardDetails.name)
+    Column(
+        modifier = modifier.padding(16.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+        ) {
+            cardDetails.imageUrl?.let {
+                AsyncImage(
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .fillMaxWidth()
+                        .weight(2F),
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(it)
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = null,
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(3F)
+            ) {
+                Text(
+                    text = cardDetails.name,
+                )
+                cardDetails.rarity?.let {
+                    Text(text = cardDetails.rarity)
+                }
+            }
+        }
+        cardDetails.description?.let {
+            Text(
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .fillMaxSize(),
+                text = it,
+            )
+        }
     }
 }
 
@@ -137,7 +182,9 @@ private class CardDetailsScreenUiStatesProvider : PreviewParameterProvider<CardD
                 CardDetailsUiModel(
                     id = "ID",
                     name = "Name",
-                    image = null
+                    image = "",
+                    rarity = "Uncommon",
+                    description = "Some description"
                 )
             )
         )

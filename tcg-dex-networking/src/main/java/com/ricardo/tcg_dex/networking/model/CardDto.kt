@@ -12,4 +12,5 @@ data class CardDto(
     val variants: VariantDto,           // ✅ Available card variants
     val boosters: List<BoosterDto>?,    // ❌ Booster packs containing this card (null if available in all boosters)
     val updated: String,                // ✅ Indicate when is the last time the card data was updated (excluding pricing infos)
+    val description: String?,            // ❌ Flavor text description
 )

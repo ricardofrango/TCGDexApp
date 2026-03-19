@@ -4,9 +4,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
@@ -18,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -25,6 +29,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import com.ricardo.tcg_dex.presentation.TCGDexScreen
 import com.ricardo.tcg_dex.presentation.screen_cards_list.model.CardUiModel
 import com.ricardo.tcg_dex.ui.theme.TCGDexAppTheme
@@ -106,9 +113,33 @@ private fun CardItem(
     card: CardUiModel,
     onCardClicked: (CardUiModel) -> Unit,
 ) {
-    Column(modifier = modifier.clickable(onClick = { onCardClicked(card) })) {
+    Row(
+        modifier = modifier
+            .clickable(onClick = { onCardClicked(card) })
+            .padding(horizontal = 8.dp, vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        card.imageUrl?.let {
+            AsyncImage(
+                modifier = Modifier
+                    .padding(end = 8.dp)
+                    .size(49.dp,68.dp),
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(it)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = null,
+            )
+        } ?: Spacer(
+            modifier = Modifier
+                .padding(end = 8.dp)
+                .size(49.dp,68.dp)
+        )
         Text(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier = Modifier
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .fillMaxWidth()
+                .weight(3f),
             text = card.name,
             style = MaterialTheme.typography.bodyMedium
         )

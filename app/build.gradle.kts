@@ -62,6 +62,10 @@ android {
 dependencies {
     implementation(project(":tcg-dex-networking"))
 
+    //COIL
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+
     //HILT
     implementation(libs.hilt.android)
     implementation(libs.androidx.navigation.runtime.ktx)
