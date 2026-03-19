@@ -64,13 +64,10 @@ dependencies {
 
     //HILT
     implementation(libs.hilt.android)
-    implementation(libs.androidx.navigation.runtime.ktx)
-    ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
+    ksp(libs.hilt.compiler)
 
-    // AndroidX
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
+    // Material3
     implementation(libs.androidx.compose.material3)
 
     //COMPOSE
