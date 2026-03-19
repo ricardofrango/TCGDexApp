@@ -12,7 +12,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Qualifier
 import javax.inject.Singleton
-import kotlin.jvm.java
 
 @Module
 @InstallIn(SingletonComponent::class)
